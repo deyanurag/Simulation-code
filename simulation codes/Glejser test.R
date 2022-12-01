@@ -18,6 +18,10 @@ myCluster<-makeCluster(64)
 registerDoParallel(myCluster)
 
 it<-100
+#true value of 2*eta
+eta_0<-0
+
+#a set 2*eta's
 eta_1<-0
 eta_2<-0.2
 eta_3<-0.4
@@ -52,24 +56,19 @@ for(i in 1:length(t))
 beta<-rep(0,length(t))
 for(j in 1:length(t))
 {
-  beta[j]=1-(t[j]-1/2)^2
+  beta[j]=t[j]
+  #1-(t[j]-1/2)^2
   #1
-  #t[j]
   
 }
 beta_1<-rep(1,c)
 
 Y_1<-matrix(0,N,length(t))
-#Y_21<-matrix(0,N,length(t))
-#Y_31<-matrix(0,N,length(t))
-#Y_41<-matrix(0,N,length(t))
+
 
 for(i in 1:N)
 {
-  Y_1[i,]<-as.vector(rmvnorm(1, 1000+beta*X_1[i], (X_1[i]^eta_6)*T))
-  #Y_21[i,]<-as.vector(rmvnorm(1, 1000+beta*X_1[i], (X_1[i]^eta_2)*T))
-  #Y_31[i,]<-as.vector(rmvnorm(1, 1000+beta*X_1[i], (X_1[i]^eta_3)*T))
-  #Y_41[i,]<-as.vector(rmvnorm(1, 1000+beta*X_1[i], (X_1[i]^eta_4)*T))
+  Y_1[i,]<-as.vector(rmvnorm(1, 1000+beta*X_1[i], (X_1[i]^eta_0)*T))
 }
 
 system.time({
@@ -81,24 +80,16 @@ system.time({
     
     X<-rep(0,n)
     Y<-matrix(0,n,length(t))
-    #Y_2<-matrix(0,n,length(t))
-    #Y_3<-matrix(0,n,length(t))
-    #Y_4<-matrix(0,n,length(t))
+
     Z<-rep(0,n)
-    #Z_2<-rep(0,n)
-    #Z_3<-rep(0,n)
-    #Z_4<-rep(0,n)
+
     
     z<-sample(Q,n,replace = FALSE)
     X<-X_1[z]
     Y<-Y_1[z,]
-    #Y_2<-Y_21[z,]
-    #Y_3<-Y_31[z,]
-    #Y_4<-Y_41[z,]
+
     Z<-rowSums(Y)/c
-    #Z_2<-rowSums(Y_2)/c
-    #Z_3<-rowSums(Y_3)/c
-    #Z_4<-rowSums(Y_4)/c
+
     
     
     gl_1<-0
@@ -164,63 +155,16 @@ system.time({
     gl_10<-glejser(model_10)$p.value
     gl_11<-glejser(model_11)$p.value
     
-    
-    c(gl_1, gl_2, gl_3, gl_4, gl_5,gl_6,gl_7,gl_8,gl_9,gl_10,gl_11)
-    
+    p<-0
+    maximum=max(gl_1, gl_2, gl_3, gl_4, gl_5,gl_6,gl_7,gl_8,gl_9,gl_10,gl_11)
+    if(maximum%in% c(gl_1, gl_2, gl_3, gl_4, gl_5,gl_6))
+    p=1/it
+    p
   }})
 
 stopCluster(myCluster)
 
-
-p_1<-rep(0,it)
-p_2<-rep(0,it)
-p_3<-rep(0,it)
-p_4<-rep(0,it)
-p_5<-rep(0,it)
-p_6<-rep(0,it)
-p_7<-rep(0,it)
-p_8<-rep(0,it)
-p_9<-rep(0,it)
-p_10<-rep(0,it)
-p_11<-rep(0,it)
-
-for(i in 1:it)
-{
-  if(output[i,1]>=0.05)
-    p_1[i]=1
-  if(output[i,2]>=0.05)
-    p_2[i]=1
-  if(output[i,3]>=0.05)
-    p_3[i]=1
-  if(output[i,4]>=0.05)
-    p_4[i]=1
-  if(output[i,5]>=0.05)
-    p_5[i]=1
-  if(output[i,6]>=0.05)
-    p_6[i]=1
-  if(output[i,7]>=0.05)
-    p_7[i]=1
-  if(output[i,8]>=0.05)
-    p_8[i]=1
-  if(output[i,9]>=0.05)
-    p_9[i]=1
-  if(output[i,10]>=0.05)
-    p_10[i]=1
-  if(output[i,11]>=0.05)
-    p_11[i]=1
-}
-
-mean(p_1)
-mean(p_2)
-mean(p_3)
-mean(p_4)
-mean(p_5)
-mean(p_6)
-mean(p_7)
-mean(p_8)
-mean(p_9)
-mean(p_10)
-mean(p_11)
+sum(output[,1])
 
 
 
