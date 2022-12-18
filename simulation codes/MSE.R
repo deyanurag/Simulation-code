@@ -329,7 +329,7 @@ vec<-c(mean(W_1^2), mean(W_2^2), mean(W_3^2), mean(W_5^2), mean(W_4^2), mean(W_7
 du<-data.frame(vec)
 rownames(du)<-c("HT_SRS", "GREG_SRS", "HT_RS", "GREG_RS", "RHC", "GREG_RHC")
 colnames(du)<-c("eta_0")
-write.csv(du, "D:/comparison/FDA/Bernoulli.csv")
+write.csv(du, "F:/comparison/FDA/File_simulation_1.csv")
 
 
 #du<-read.csv("F:/comparison/FDA/File_simulation_1.csv")
