@@ -9,7 +9,7 @@ library(isotone)
 
 a<-c(0,0.1, 0.2, 0.3, 0.4,0.5, 0.6, 0.7, 0.8, 0.9 ,1)
 
-du<-read.csv("D:/comparison/FDA/File_simulation_1.csv")
+du<-read.csv("F:/comparison/FDA/File_simulation_1.csv")
 
 dv<-t(du)
 
@@ -21,8 +21,6 @@ RE_3<-expression(bold(RE(bolditalic(hat(bar(Y))[HT]),~RS~"|"~bolditalic(hat(bar(
 RE_4<-expression(bold(RE(bolditalic(hat(bar(Y))[RHC]),~RHC~"|"~bolditalic(hat(bar(Y))[GREG]),~RHC)))
 RE_6<-expression(bold(RE(bolditalic(hat(bar(Y))[GREG]),~SRSWOR~"|"~bolditalic(hat(bar(Y))[GREG]),~RS)))
 RE_7<-expression(bold(RE(bolditalic(hat(bar(Y))[GREG]),~SRSWOR~"|"~bolditalic(hat(bar(Y))[GREG]),~RHC)))
-
-du[1,2:12]
 
 plot(a,as.numeric(du[4,-1])/as.numeric(du[2,-1]) ,ylim=c(0.8,1.2),type="l", lty="solid", xlab="Degree of heteroscedasticity",ylab="Relative efficiency"
      ,cex.lab=1.5,cex.axis=1.5,cex.main=1.5)
