@@ -43,9 +43,9 @@ for(i in 1:length(t))
 beta<-rep(0,length(t))
 for(j in 1:length(t))
 {
-  beta[j]=1
+  beta[j]=1-(t[j]-1/2)^2
   #t[j]
-  #1-(t[j]-1/2)^2
+  #1
   
 }
 
